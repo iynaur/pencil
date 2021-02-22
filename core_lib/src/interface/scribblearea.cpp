@@ -1049,7 +1049,9 @@ void ScribbleArea::paintEvent(QPaintEvent* event)
         }
     }
 
-    QPainter painter(this);
+    QImage img(size(), QImage::Format_ARGB32);
+    img.fill(Qt::white);
+    QPainter painter(&img);
 
     // paints the canvas
     painter.setWorldMatrixEnabled(false);
@@ -1150,6 +1152,9 @@ void ScribbleArea::paintEvent(QPaintEvent* event)
     painter.setBrush(Qt::NoBrush);
     painter.drawRect(QRect(0, 0, width(), height()));
 #endif
+
+    QPainter rpainter(this);
+    rpainter.drawImage(0,0, img);
 
     event->accept();
 }
